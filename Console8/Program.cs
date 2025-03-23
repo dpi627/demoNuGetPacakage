@@ -17,6 +17,21 @@ internal class Program
 
         Log.Information("Starting up");
 
+        #region 不使用 Hosting Builder，直接 using
+        //using MyService service = new();
+        //service.DoWork();
+        #endregion
+
+        #region 不使用 Hosting Builder，直接 using (並注入 ILoggerFactory)
+        //using ILoggerFactory loggerFactory = LoggerFactory.Create(config =>
+        //{
+        //    config.AddSerilog();
+        //});
+        //using MyService service = new(loggerFactory);
+        //service.DoWork();
+        #endregion
+
+        #region 使用 Hosting Builder
         // create host
         var builder = Host.CreateApplicationBuilder(args);
 
@@ -32,8 +47,9 @@ internal class Program
 
         // WebApp 或 Worker Service 還需 Run() 讓服務持續運行
         //host.Run(); // 或 await host.RunAsync();
+        #endregion
 
-        // 一次性執行程式，build() 以後可從 host.Services 取得服務執行
+        // 一次性執行程式，build() 之後可從 host.Services 取得服務執行
         var myService = host.Services.GetRequiredService <MyService>();
         myService.DoWork();
     }
