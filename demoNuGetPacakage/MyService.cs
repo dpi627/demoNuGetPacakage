@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,6 +9,12 @@ namespace demoNuGetPacakage
     internal class MyService : IDisposable
     {
         private bool _disposed;
+        private readonly ILogger<MyService> _logger;
+
+        public MyService(ILoggerFactory? loggerFactory = default)
+        {
+            _logger = loggerFactory?.CreateLogger<MyService>() ?? NullLogger<MyService>.Instance;
+        }
 
         // Public implementation of Dispose pattern
         public void Dispose()
