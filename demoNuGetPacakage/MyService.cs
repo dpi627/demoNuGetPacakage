@@ -3,7 +3,7 @@ using System;
 
 namespace demoNuGetPacakage;
 
-public class MyService : IDisposable
+public class MyService : IMyService, IDisposable
 {
     private bool _disposed;
     private readonly ILogger<MyService> _logger;

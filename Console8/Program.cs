@@ -37,7 +37,7 @@ internal class Program
 
         // add services
         builder.Services.AddSerilog();
-        builder.Services.AddSingleton<MyService>();
+        builder.Services.AddSingleton<IMyService, MyService>();
 
         // 如果是 Worker Service，服務會註冊為 Singleton，並且自動啟動
         // builder.Services.AddHostedService<MyWorker>(); // MyWorker 為 BackgroundService 實作
@@ -50,7 +50,7 @@ internal class Program
         #endregion
 
         // 一次性執行程式，build() 之後可從 host.Services 取得服務執行
-        var myService = host.Services.GetRequiredService <MyService>();
+        var myService = host.Services.GetRequiredService<IMyService>();
         myService.DoWork();
     }
 }
