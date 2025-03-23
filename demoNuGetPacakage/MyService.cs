@@ -3,14 +3,14 @@ using System;
 
 namespace demoNuGetPacakage;
 
-internal class MyService : IDisposable
+public class MyService : IDisposable
 {
     private bool _disposed;
     private readonly ILogger<MyService> _logger;
 
     public MyService(ILoggerFactory? loggerFactory = default)
     {
-        _logger = MyLoggerFactory.CreateLogger<MyService>();
+        _logger = MyLoggerFactory.CreateLogger<MyService>(loggerFactory);
         _logger.LogInformation("Creating Service {service}", nameof(MyService));
     }
 
