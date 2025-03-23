@@ -19,7 +19,7 @@ internal class MyService : IDisposable
         _logger.LogInformation("Doing work.");
     }
 
-    // Public implementation of Dispose pattern
+    #region Implementation of Dispose pattern
     public void Dispose()
     {
         Dispose(true);
@@ -53,4 +53,5 @@ internal class MyService : IDisposable
     {
         Dispose(false);
     }
+    #endregion
 }
