@@ -38,6 +38,7 @@ internal class Program
         // add services
         builder.Services.AddSerilog();
         builder.Services.AddSingleton<IMyService, MyService>();
+        builder.Services.AddTransient<MyTest>();
 
         // 如果是 Worker Service，服務會註冊為 Singleton，並且自動啟動
         // builder.Services.AddHostedService<MyWorker>(); // MyWorker 為 BackgroundService 實作
@@ -52,5 +53,18 @@ internal class Program
         // 一次性執行程式，build() 之後可從 host.Services 取得服務執行
         var myService = host.Services.GetRequiredService<IMyService>();
         myService.DoWork();
+
+        var myTest = host.Services.GetRequiredService<MyTest>();
+        myTest.Run(); // 如果將前面 MyService 改為 AddTransient，執行後會看到服務生成兩次
+    }
+
+    /// 高階模組(MyTest)依賴低階模組(MyService)的介面(Interface)而非實體
+    /// 之後抽換實作只要改 DI Container 的註冊即可，例如改為 <IMyService, MyNewServiceV2>
+    class MyTest(IMyService service)
+    {
+        public void Run()
+        {
+            service.DoWork();
+        }
     }
 }
