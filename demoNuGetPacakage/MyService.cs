@@ -11,6 +11,12 @@ internal class MyService : IDisposable
     public MyService(ILoggerFactory? loggerFactory = default)
     {
         _logger = MyLoggerFactory.CreateLogger<MyService>();
+        _logger.LogInformation("Creating Service {service}", nameof(MyService));
+    }
+
+    public void DoWork()
+    {
+        _logger.LogInformation("Doing work.");
     }
 
     // Public implementation of Dispose pattern
