@@ -8,10 +8,49 @@
 		<NoWarn>$(NoWarn);1591</NoWarn>
 		<Nullable>enable</Nullable>
 		<Version>1.0.0</Version>
+
+		<!-- NuGet Package Metadata -->
+		<PackageId>demoNuGetPackage</PackageId>
+		<Authors>Brian</Authors>
+		<Owners>department or team name (optional)</Owners>
+		<Company>company name (optional)</Company>
+		<Description>package description</Description>
+		<PackageTags>tag1, tag2</PackageTags>
+		<PackageProjectUrl>your repo url</PackageProjectUrl>
+		<PackageCopyright>Copyright © description</PackageCopyright>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<!-- 有額外檔案才需要
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<ContentTargetFolders>content</ContentTargetFolders>
+		-->
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
 	</ItemGroup>
 
+	<!-- 依照目標框架不同依賴不同套件
+	<ItemGroup Condition="'$(TargetFramework)' == 'net472' OR '$(TargetFramework)' == 'net481'">
+		<PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+	</ItemGroup>
+	-->
+
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="\" />
+		<None Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<!-- 有額外檔案才需要
+	<ItemGroup>
+		<Content Include="content\*.txt" Pack="true" PackagePath="content" />
+	</ItemGroup>
+	-->
+	<!-- 定義統一的符號 NETFRAMEWORK 識別多個目標框架 (內建自動識別，例如 NET472、NET481)
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net472' OR '$(TargetFramework)' == 'net481'">
+		<DefineConstants>NETFRAMEWORK</DefineConstants>
+	</PropertyGroup>
+	-->
 </Project>
