@@ -1,29 +1,37 @@
-# demoNuGetPacakage
+![](https://img.shields.io/badge/SGS-OAD-orange) 
+![](https://img.shields.io/badge/proj-demo%20nuget%20package-purple) 
+![](https://img.shields.io/badge/-4.7.2-3484D2?logo=dotnet)
+![](https://img.shields.io/badge/-4.8.1-3484D2?logo=dotnet)
+![](https://img.shields.io/badge/-Standard%202.0-056473?logo=dotnet)
+![](https://img.shields.io/badge/-6-512BD4?logo=dotnet)
+![](https://img.shields.io/badge/-8-512BD4?logo=dotnet)
+![](https://img.shields.io/badge/-NuGet-004880?logo=nuget)
+
+# 📦demoNuGetPacakage
 
 > [!NOTE] 
 > a quick demo for neget package development
 
-# Freatures
+# 🕹️Features
 
-- contains a simple class `MyService`
-- contains a simple interface `IMyService`
-- `MyService` contains a method `DoWork()`
-- using `Microsoft.Extensions.Logging`
-- `MyService` implement `IMyService` and `IDisposable`
-- inject `ILoggerFactory` for create `ILogger<T>`
+- contains a interface `IMyService` with `DoWork()` method
+- implement `IMyService` with class `MyService` 
+- also implement `IDisposable` for `using` keyword
+- using `Microsoft.Extensions.Logging.Abstractions` for log
+- inject `ILoggerFactory` to create `ILogger<T>`
 
 > [!IMPORTANT]
 > - design a class `MyLoggerFactory` to warp `CreateLogger<T>()`
 > - it returns `NullLogger<T>` if `ILoggerFactory` equals to `default`
 
-# Console8
+# 📟Console8
 
 > [!NOTE]
-> a simple console project to show some use cases
+> a simple `.NET8` console project to show some use cases
 
 ## 1. Use `using`
 
-### direct `using`
+### 🪂Direct `using`
 
 ```cs
 // no logger inject
@@ -31,7 +39,7 @@ using MyService service = new();
 service.DoWork();
 ```
 
-### with `ILoggerFactory` injection
+### 🪐With `ILoggerFactory` injection
 
 ```cs
 // create ILoggerFactory from Serilog
@@ -45,8 +53,16 @@ using MyService service = new(loggerFactory);
 service.DoWork();
 ```
 
+launch the console app, you can see the screen output:
+
+```sh
+[19:59:24 INF] Starting up
+[19:59:24 INF] Creating Service MyService
+[19:59:24 INF] Doing work.
+```
+
 > [!TIP]
-> for old `C#` version, you may need to use `using` like below
+> for old `C#` version, you may need to use `using` like:
 
 ```cs
 using (var service = new MyService())
@@ -57,7 +73,7 @@ using (var service = new MyService())
 
 ## 2. Dependency Injection
 
-### build with `HostBuilder`
+### 👽Build with `HostBuilder`
 
 ```cs
 // create host builder
@@ -71,14 +87,14 @@ builder.Services.AddSingleton<IMyService, MyService>();
 var host = builder.Build();
 ```
 
-### get service from `ServiceProvider`
+### 🍄Get service from `ServiceProvider`
   
 ```cs
 var myService = host.Services.GetRequiredService<IMyService>();
 myService.DoWork();
 ```
 
-### or inject to class, e.g. `constructor-injection`
+### 🌵Or inject to class, e.g. `constructor-injection`
   
 ```cs
 class MyTest(IMyService service)
@@ -90,10 +106,12 @@ class MyTest(IMyService service)
 }
 ```
 
+### 🪅one more things...
+
 > [!TIP]
 > - you need `host.Run()` for WebApp or Worker Service
 > - `await host.RunAsync()` is also available
-> - in Worker Service, you need to register service like below
+> - in Worker Service, remember to register service:
 
 ```cs
 // MyWork.cs is your background service
