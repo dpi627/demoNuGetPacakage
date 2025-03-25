@@ -20,7 +20,7 @@ public class MyService : IMyService, IDisposable
 
     public void DoWork()
     {
-        _logger.LogInformation("Doing work.");
+        _logger.LogInformation("Doing work with p1:{p1} and p2:{p2}", _p1, _p2);
     }
 
     public MyService SetParam1(string p1)

@@ -1,6 +1,7 @@
 ﻿using demoNuGetPacakage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Console8;
@@ -40,7 +41,8 @@ internal class Program
         //    new MyService().SetParam1("Hey").SetParam2(666)
         //);
         builder.Services.AddSingleton<IMyService, MyService>(x => {
-            var myService = new MyService().SetParam1("Hi").SetParam2(87);
+            var loogerFactory = x.GetRequiredService<ILoggerFactory>();
+            var myService = new MyService(loogerFactory).SetParam1("Hi").SetParam2(87);
             // do something with myService...
             return myService;
         });
@@ -70,7 +72,7 @@ internal class Program
     {
         public void Run()
         {
-            service.DoWork();
+            service.SetParam1("Woo").SetParam2(500).DoWork();
         }
     }
 }
