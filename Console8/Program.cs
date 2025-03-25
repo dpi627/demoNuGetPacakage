@@ -17,8 +17,8 @@ internal class Program
         Log.Information("Starting up");
 
         #region 不使用 Hosting Builder，直接 using
-        //using MyService service = new();
-        //service.DoWork();
+        using MyService service = new();
+        service.SetParam1("Hello").SetParam2(9527).DoWork();
         #endregion
 
         #region 不使用 Hosting Builder，直接 using (並注入 ILoggerFactory)
@@ -36,7 +36,9 @@ internal class Program
 
         // add services
         builder.Services.AddSerilog();
-        builder.Services.AddSingleton<IMyService, MyService>();
+        builder.Services.AddSingleton<IMyService, MyService>(x =>
+            new MyService().SetParam1("Hey").SetParam2(666)
+        );
         builder.Services.AddTransient<MyTest>();
 
         // 如果是 Worker Service，服務會註冊為 Singleton，並且自動啟動
