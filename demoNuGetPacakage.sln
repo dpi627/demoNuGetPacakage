@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoNuGetPacakage", "demoNu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console8", "Console8\Console8.csproj", "{7FBB39A7-7885-44FF-8A82-CF07532C7DDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console8BuilderTest", "Console8BuilderTest\Console8BuilderTest.csproj", "{18FC7157-4F54-4F46-88A7-76EA8D3E41A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7FBB39A7-7885-44FF-8A82-CF07532C7DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FBB39A7-7885-44FF-8A82-CF07532C7DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FBB39A7-7885-44FF-8A82-CF07532C7DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18FC7157-4F54-4F46-88A7-76EA8D3E41A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18FC7157-4F54-4F46-88A7-76EA8D3E41A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18FC7157-4F54-4F46-88A7-76EA8D3E41A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18FC7157-4F54-4F46-88A7-76EA8D3E41A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
