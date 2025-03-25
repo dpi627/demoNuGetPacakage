@@ -36,9 +36,14 @@ internal class Program
 
         // add services
         builder.Services.AddSerilog();
-        builder.Services.AddSingleton<IMyService, MyService>(x =>
-            new MyService().SetParam1("Hey").SetParam2(666)
-        );
+        //builder.Services.AddSingleton<IMyService, MyService>(x =>
+        //    new MyService().SetParam1("Hey").SetParam2(666)
+        //);
+        builder.Services.AddSingleton<IMyService, MyService>(x => {
+            var myService = new MyService().SetParam1("Hi").SetParam2(87);
+            // do something with myService...
+            return myService;
+        });
         builder.Services.AddTransient<MyTest>();
 
         // 如果是 Worker Service，服務會註冊為 Singleton，並且自動啟動
