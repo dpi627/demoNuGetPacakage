@@ -10,7 +10,13 @@ public class MyService : IMyService, IDisposable
     private string _p1;
     private int _p2;
 
-    public MyService(ILoggerFactory? loggerFactory = default)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MyService"/> class.
+    /// </summary>
+    /// <returns><see cref="MyService"/> instance</returns>
+    public static MyService Init(ILoggerFactory? loggerFactory = default) => new(loggerFactory);
+
+    private MyService(ILoggerFactory? loggerFactory)
     {
         _logger = MyLoggerFactory.CreateLogger<MyService>(loggerFactory);
         _logger.LogInformation("Creating Service {service}", nameof(MyService));

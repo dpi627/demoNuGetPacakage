@@ -1,6 +1,7 @@
 ﻿using demoNuGetPacakage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Console8;
@@ -17,7 +18,7 @@ internal class Program
         Log.Information("Starting up");
 
         #region 不使用 Hosting Builder，直接 using
-        using MyService service = new();
+        using MyService service = MyService.Init();
         service.SetParam1("Hello").SetParam2(9527).DoWork();
         #endregion
 
@@ -37,10 +38,11 @@ internal class Program
         // add services
         builder.Services.AddSerilog();
         //builder.Services.AddSingleton<IMyService, MyService>(x =>
-        //    new MyService().SetParam1("Hey").SetParam2(666)
+        //    MyService.Init().SetParam1("Hey").SetParam2(666)
         //);
         builder.Services.AddSingleton<IMyService, MyService>(x => {
-            var myService = new MyService().SetParam1("Hi").SetParam2(87);
+            var loggerFactory = x.GetRequiredService<ILoggerFactory>();
+            var myService = MyService.Init(loggerFactory).SetParam1("Hi").SetParam2(87);
             // do something with myService...
             return myService;
         });
