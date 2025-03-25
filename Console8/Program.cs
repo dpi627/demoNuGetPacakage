@@ -72,7 +72,7 @@ internal class Program
     {
         public void Run()
         {
-            service.DoWork();
+            service.SetParam1("Woo").SetParam2(500).DoWork();
         }
     }
 }
