@@ -7,7 +7,7 @@
 ![](https://img.shields.io/badge/-8-512BD4?logo=dotnet)
 ![](https://img.shields.io/badge/-NuGet-004880?logo=nuget)
 
-# 📦demoNuGetPacakage
+# 📦demoNuGetPackage
 
 > [!NOTE] 
 > a quick demo for neget package development
@@ -106,9 +106,48 @@ class MyTest(IMyService service)
 }
 ```
 
-### 🪅one more things...
+### 🏭`Factory` & `Builder` design pattern
 
-> [!TIP]
+```cs
+// register service with default build (no logger)
+builder.Services.AddScoped<IMyService>(provider =>
+{
+    var builder = provider.GetRequiredService<IMyServiceBuilder>();
+    return builder.SetParam1("default value")
+        .SetParam2(123)
+        .Build();
+});
+```
+
+```cs
+// register builder with logger provider
+builder.Services.AddScoped<IMyServiceBuilder>(provider =>
+{
+    var factory = provider.GetService<ILoggerFactory>();
+    return MyServiceBuilder.Init(factory);
+});
+
+class MyTest()
+{
+    // inject and build in method
+    public void RunWithBuilder(IMyServiceBuilder builder)
+    {
+        var service = builder
+            .SetParam1("From Builder")
+            .SetParam2(888)
+            .Build();
+        service.DoWork();
+    }
+}
+```
+
+>[!TIP]
+> create an `Extension` for `DI` is a plus ✨
+
+### 🪅One more thing...
+
+> [!IMPORTANT]
+> - when using `Microsoft.Extensions.Hosting`
 > - you need `host.Run()` for WebApp or Worker Service
 > - `await host.RunAsync()` is also available
 > - in Worker Service, remember to register service:
