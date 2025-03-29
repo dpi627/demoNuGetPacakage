@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net472;net481;net6;net8</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net4.7.2;net4.8.1;net6.0;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<ImplicitUsings>false</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
@@ -30,6 +30,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
 	</ItemGroup>
 
 	<!-- 依照目標框架不同依賴不同套件
