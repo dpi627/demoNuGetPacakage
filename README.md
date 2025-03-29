@@ -10,7 +10,7 @@
 # 📦demoNuGetPackage
 
 > [!NOTE] 
-> a quick demo for neget package development
+> a quick demo for nuget package development
 
 # 🕹️Features
 
@@ -21,7 +21,7 @@
 - inject `ILoggerFactory` to create `ILogger<T>`
 
 > [!IMPORTANT]
-> - design a class `MyLoggerFactory` to warp `CreateLogger<T>()`
+> - design a class `MyLoggerFactory` to wrap `CreateLogger<T>()`
 > - it returns `NullLogger<T>` if `ILoggerFactory` equals to `default`
 
 # 📟Console8
@@ -87,6 +87,19 @@ builder.Services.AddSingleton<IMyService, MyService>();
 var host = builder.Build();
 ```
 
+### 🍨One more thing...
+
+> [!IMPORTANT]
+> - when using `Microsoft.Extensions.Hosting`
+> - you need `host.Run()` for WebApp or Worker Service
+> - `await host.RunAsync()` is also available
+> - in Worker Service, remember to register service:
+
+```cs
+// MyWork.cs is your background service
+builder.Services.AddHostedService<MyWorker>();
+```
+
 ### 🍄Get service from `ServiceProvider`
   
 ```cs
@@ -144,15 +157,34 @@ class MyTest()
 >[!TIP]
 > create an `Extension` for `DI` is a plus ✨
 
-### 🪅One more thing...
-
-> [!IMPORTANT]
-> - when using `Microsoft.Extensions.Hosting`
-> - you need `host.Run()` for WebApp or Worker Service
-> - `await host.RunAsync()` is also available
-> - in Worker Service, remember to register service:
+## 3. Dependency Injection Extension
 
 ```cs
-// MyWork.cs is your background service
-builder.Services.AddHostedService<MyWorker>();
+// only for .NET 6+ with DI (AddScoped)
+builder.Services.UseMyService();
+```
+
+- 預設 `AddScoped` 適合 WebApp，DesktopApp 可能導致單例行為
+- 改用 `AddTransient` 可解決，但在 WebApp 可能造成不必要的實例創建
+- 桌面應用可手動管理範圍，例如
+
+```cs
+using (var scope = provider.CreateScope())
+{
+    var service1 = scope.ServiceProvider.GetRequiredService<IMyService>();
+    var service2 = scope.ServiceProvider.GetRequiredService<IMyService>();
+    // service1 和 service2 是同一個實例，因為在同一個範圍內
+}
+using (var scope = provider.CreateScope())
+{
+    var service3 = scope.ServiceProvider.GetRequiredService<IMyService>();
+    // service3 是新實例，因為在新範圍中
+}
+```
+
+- 套件實作了生命週期控制，可依照應用程式類型設定即可
+
+```cs
+// support lifetime setting, e.g. AddTransient
+builder.Services.UseMyService(ServiceLifetime.Transient);
 ```
