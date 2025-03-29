@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using demoNuGetPacakage;
 
 namespace Console472
 {
@@ -10,6 +6,10 @@ namespace Console472
     {
         static void Main(string[] args)
         {
+            using (var service = MyService.Init())
+            {
+                service.DoWork();
+            }
         }
     }
 }
