@@ -41,8 +41,10 @@ internal class Program
         //                         .Build();
         //});
 
-        // 使用擴充方法簡化註冊服務
+        // 使用擴充方法簡化註冊服務，預設為 Scoped
         builder.Services.UseMyService();
+        // 設定生命週期為 Transient，每次使用均產生一個新的實例
+        //builder.Services.UseMyService(ServiceLifetime.Transient);
 
         builder.Services.AddTransient<MyTest>();
 
